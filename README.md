@@ -31,50 +31,45 @@ This project demonstrates a **modern data engineering approach** to customer chu
 
 ## 🏗️ Architecture
 
+### 1. Overall Project Architecture
+
+```mermaid
+flowchart TD
+    subgraph Ingestion ["1️⃣ Data Ingestion"]
+        A[Excel File] -->|convert| B(CSV File)
+        B -->|dbt seed| C[(DuckDB)]
+    end
+
+    subgraph DBT ["2️⃣ DBT Pipeline"]
+        C --> D[Staging Layer\n'stg_customers']
+        D --> E[Intermediate Layer\n'int_customer_features']
+        E --> F[Marts Layer\n'fct_customer_churn']
+    end
+
+    subgraph ML ["3️⃣ Machine Learning"]
+        F -->|Fetch data| G[Data Prep & SMOTE]
+        G -->|Train Models| H{Model Evaluation}
+        H -->|LR, RF, XGBoost| I[Save Best Model]
+    end
+
+    subgraph App ["4️⃣ Deployment"]
+        I --> J[Streamlit Dashboard]
+        F --> J
+        J --> K((User Predictions))
+    end
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                    PROJECT WORKFLOW                          │
-└──────────────────────────────────────────────────────────────┘
 
-1️⃣ DATA INGESTION
-   Excel File (Kaggle)
-      │
-      ├─→ src/convert_excel_to_csv.py
-      │
-      ▼
-   CSV Seed File
-      │
-      └─→ dbt seed → DuckDB
+### 2. DBT Data Modeling DAG
 
-2️⃣ DBT PIPELINE (3 Layers)
-   
-   DuckDB Database
-      │
-      ├─→ Layer 1: STAGING (stg_customers.sql)
-      │   └─ Clean & rename columns
-      │
-      ├─→ Layer 2: INTERMEDIATE (int_customer_features.sql)
-      │   └─ Encode features, feature engineering
-      │
-      └─→ Layer 3: MARTS (fct_customer_churn.sql)
-          └─ Final ML-ready dataset (TABLE)
-
-3️⃣ MACHINE LEARNING
-   
-   Python Training Script
-      │
-      ├─→ Load from DuckDB
-      ├─→ Handle imbalance (SMOTE)
-      ├─→ Scale features (StandardScaler)
-      ├─→ Train 3 models (LR, RF, XGBoost)
-      ├─→ Evaluate & compare
-      └─→ Save best model
-
-4️⃣ DEPLOYMENT
-   
-   Streamlit Dashboard
-      │
-      └─→ Real-time churn predictions
+```mermaid
+graph LR
+    A[(Raw DuckDB Data)] -->|Source| B(stg_customers.sql)
+    B -->|Cleaned Data| C(int_customer_features.sql)
+    C -->|Feature Eng & Encoding| D(fct_customer_churn.sql)
+    D -->|ML-Ready Table| E[(Final DuckDB View)]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ---
