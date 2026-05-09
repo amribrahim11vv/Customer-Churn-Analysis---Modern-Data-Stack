@@ -496,9 +496,9 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## 📞 Contact
 
-- **GitHub:** [Your GitHub Profile]
-- **LinkedIn:** [Your LinkedIn]
-- **Email:** [Your Email]
+- **GitHub:** [https://github.com/amribrahim11vv](https://github.com/amribrahim11vv)
+- **LinkedIn:** [Amr Ibrahim](https://www.linkedin.com/in/amr-ibrahim-606ba4274/)
+- **Email:** [amribrahim6221@gmail.com](mailto:amribrahim6221@gmail.com)
 
 ---
 
@@ -506,4 +506,4 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ---
 
-*Built with ❤️ using DBT, DuckDB, and Python*
+***Amr Ibrahim - Data Engineer & ML Engineer***
