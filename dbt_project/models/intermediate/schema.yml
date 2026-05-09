@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: int_customer_features
+    description: "Encoded features"
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      
+      - name: gender_encoded
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      
+      - name: churn
+        tests:
+          - not_null
